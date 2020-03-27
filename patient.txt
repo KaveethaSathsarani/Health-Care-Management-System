@@ -1,0 +1,6 @@
+Patient Functionality.
+
+Only the registered patients are able to interact with the system using their username and password.Hence if a user is not registered ,he should be able to fill the registration form.
+Each registered patient has a user profile which includes all the personal information to which he can enter more details.The registered user should be able to make appointments ,
+entering the relavant details and also if it is being subbmitted ,he is responsible to make the relavant appointment charges where as has the ability to cancle the appointment
+before making the payment.
