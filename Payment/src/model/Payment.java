@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,25 +8,7 @@ import java.sql.Statement;
 
 public class Payment {
 	
-	private Connection connect()
-	{
-		
-		Connection con=null;
-		
-		try {
-			System.out.println("In");
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			con=DriverManager.getConnection("jdbc:mysql://localhost/healthcare", "root", "root");
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-		return con;
-		
-	}
+	
 	
 	public String insertPayment(Double DocCharge,Double HosCharge,Double AppoCharge,Double Total,String PayType,String CardNo,String CardExpiryDate,String Card_CVNo,
 								Integer AID,Integer DocID)
@@ -76,8 +57,8 @@ public class Payment {
 	 }
 	 catch (Exception e)
 	 {
-	 output = "Error while inserting the payment.";
-	 System.out.println("error in inserting"+e);	
+		 output = "Error while inserting the payment.";
+	 	System.out.println("error in inserting"+e);	
 	 }
 	 return output;
 	 }
