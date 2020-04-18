@@ -24,7 +24,7 @@ return patientObj.readItems();
 
 @POST
 @Path("/")
-@Consumes(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 @Produces(MediaType.TEXT_PLAIN)
 public String insertItem(@FormParam("Name") String Name,
  @FormParam("Address") String Address,
@@ -57,7 +57,7 @@ return output;
 
 @DELETE
 @Path("/")
-@Consumes(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.TEXT_PLAIN)
 public String deleteItem(String itemData)
 {
