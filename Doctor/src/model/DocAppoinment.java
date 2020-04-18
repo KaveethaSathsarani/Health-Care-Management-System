@@ -72,7 +72,7 @@ public class DocAppoinment {
 			}
 
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>Doctor ID</th><th>Appoinment ID</th><th>Phone Number</th></tr>";
+			output = "<table border=\"1\"><tr><th>Doctor ID</th><th>Appoinment ID</th><th>Phone Number</th><th>Remove</th></tr>";
 			String query = "select * from docappoinments";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -92,8 +92,9 @@ public class DocAppoinment {
 				output += "<td>" + AID + "</td>";
 				output += "<td>" + DocPhone + "</td>";
 
-
-
+				// buttons
+				output += "<td><form method=\"post\" action=\"doctor.jsp\">"+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"+ "<input name=\"DocID\" type=\"hidden\" value=\"" + DocID+ "\">" + "</form></td></tr>";
+				
 			}
 			con.close();
 
@@ -106,6 +107,41 @@ public class DocAppoinment {
 			System.err.println(e.getMessage());
 		}
 		return output;
-	} 
+	}
+	
+	public String deleteDocAppoinment(String DocID)
+	{
+		String output = "";
+		try
+		{
+			Connection con = connect();
+			if (con == null)
+			{
+				return "Error while connecting to the database for deleting.";
+
+			}
+
+			//create a prepared statement
+
+			String query = "delete from doctor where DocID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			//binding values
+
+			preparedStmt.setInt(1, Integer.parseInt(DocID));
+
+			//execute the statement
+
+			preparedStmt.execute();
+			con.close();
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the doctor.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
 
 }

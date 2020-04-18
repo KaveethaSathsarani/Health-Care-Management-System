@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+
 public class DocWorkHost {
 	private Connection connect()
 	{
@@ -72,7 +73,7 @@ public class DocWorkHost {
 			}
 
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>Doctor ID</th><th>Hos ID</th><th>Hos Phone</th></tr>";
+			output = "<table border=\"1\"><tr><th>Doctor ID</th><th>Hos ID</th><th>Hos Phone</th><th>Remove</th></tr>";
 			String query = "select * from docworkhost";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -91,7 +92,8 @@ public class DocWorkHost {
 				output += "<tr><td>" + DocID + "</td>";
 				output += "<td>" + HosID + "</td>";
 				output += "<td>" + HosPhone + "</td>";
-				
+				// buttons
+				output += "<td><form method=\"post\" action=\"doctor.jsp\">"+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"+ "<input name=\"DocID\" type=\"hidden\" value=\"" + DocID+ "\">" + "</form></td></tr>";
 			
 
 			}
@@ -108,6 +110,40 @@ public class DocWorkHost {
 		return output;
 	} 
 
-	
+	public String deleteDocWorkHost(String DocID)
+	{
+		String output = "";
+		try
+		{
+			Connection con = connect();
+			if (con == null)
+			{
+				return "Error while connecting to the database for deleting.";
+
+			}
+
+			//create a prepared statement
+
+			String query = "delete from doctor where DocID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			//binding values
+
+			preparedStmt.setInt(1, Integer.parseInt(DocID));
+
+			//execute the statement
+
+			preparedStmt.execute();
+			con.close();
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the doctor.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
 
 }
