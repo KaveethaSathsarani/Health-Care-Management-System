@@ -11,15 +11,14 @@ import util.DBHandler;
 public class Payment {
 	
 	
-	public String insertPayment(Double DocCharge,Double HosCharge,Double AppoCharge,Double Total,String PayType,String CardNo,String CardExpiryDate,String Card_CVNo,
+	public String insertPayment(Double DocCharge,Double HosCharge,Double AppoCharge,String PayType,String CardNo,String CardExpiryDate,String Card_CVNo,
 								Integer AID,Integer DocID)
 	{
 	 
 	 String output = "";
 	 
 	 try
-	 {
-		  
+	 {  
 		 Connection con = DBHandler.connect();
 	 
 		 if (con == null)
@@ -51,7 +50,6 @@ public class Payment {
 		 preparedStmt.setDouble(2, DocCharge);
 		 preparedStmt.setDouble(3, HosCharge);
 		 preparedStmt.setDouble(4, AppoCharge);
-		 //preparedStmt.setDouble(5, Total);
 		 preparedStmt.setString(5, PayType);
 		 preparedStmt.setString(6, CardNo);
 		 preparedStmt.setString(7, CardExpiryDate);
@@ -147,7 +145,7 @@ public class Payment {
 	 
 	 try
 	 {
-		 		 Connection con = DBHandler.connect();
+		 Connection con = DBHandler.connect();
 		 if (con == null)
 		 {
 			 return "Error while connecting to the database for updating."; 
@@ -181,7 +179,6 @@ public class Payment {
 		 preparedStmt.setDouble(1, DocCharge);
 		 preparedStmt.setDouble(2, HosCharge);
 		 preparedStmt.setDouble(3, AppoCharge);
-		 //preparedStmt.setDouble(4, Total);
 		 preparedStmt.setString(4, PayType);
 		 preparedStmt.setString(5, CardNo);
 		 preparedStmt.setString(6, CardExpiryDate);
@@ -197,13 +194,13 @@ public class Payment {
 	 }
 	 catch (Exception e)
 	 {
-		 output = "Error while updating the item.";
+		 output = "Error while updating the payment.";
 		 System.err.println(e.getMessage());
 	 }
 	 	return output;
 	 }
 	
-	public String deletePayment(String payID)
+	public String deletePayment(Integer PayID)
 	{
 		
 	 String output = "";
@@ -218,7 +215,7 @@ public class Payment {
 		 }
 		 
 		 //Check payID is null 
-		 if(payID == null)
+		 if(PayID == null)
 		 {
 			 return "PayID cannot be null";
 		 }
@@ -226,7 +223,7 @@ public class Payment {
 		 String query = "delete from payment where PayID=?";
 		 PreparedStatement preparedStmt = con.prepareStatement(query);
 		 // binding values
-		 preparedStmt.setInt(1, Integer.parseInt(payID));
+		 preparedStmt.setInt(1, PayID);
 		 // execute the statement
 		 preparedStmt.execute();
 		 con.close();

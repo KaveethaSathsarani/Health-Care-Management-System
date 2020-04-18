@@ -39,25 +39,30 @@ public class PaymentFunction {
 	
 	@POST
 	@Path("/")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertPayment(@FormParam("PayID") Integer PayID,
-			 @FormParam("DocCharge") Double DocCharge,
-			 @FormParam("HosCharge") Double HosCharge,
-			 @FormParam("AppoCharge") Double AppoCharge,
-			 @FormParam("Total") Double Total,
-			 @FormParam("PayType") String PayType,
-			 @FormParam("CardNo") String CardNo,
-			 @FormParam("CardExpiryDate") String CardExpiryDate,
-			 @FormParam("Card_CVNo") String Card_CVNo,
-			 @FormParam("AID") Integer AID,
-			 @FormParam("DocID") Integer DocID)
-			{
-		
-				String output = payObj.insertPayment(DocCharge, HosCharge, AppoCharge, Total, PayType, CardNo, CardExpiryDate, Card_CVNo, AID, DocID);
-			
-				return output; 
-			}
+	public String insertPayment(String paymentmData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject payObject = new JsonParser().parse(paymentmData).getAsJsonObject();
+		//Read the values from the JSON object
+	 
+		Double DocCharge = payObject.get("DocCharge").getAsDouble();
+		Double HosCharge = payObject.get("HosCharge").getAsDouble();
+		Double AppoCharge = payObject.get("AppoCharge").getAsDouble();
+		//Double Total = payObject.get("Total").getAsDouble();
+		String PayType = payObject.get("PayType").getAsString();
+		String CardNo = payObject.get("CardNo").getAsString();
+		String CardExpiryDate = payObject.get("CardExpiryDate").getAsString();
+		String Card_CVNo =payObject.get("Card_CVNo").getAsString();
+		Integer AID = payObject.get("AID").getAsInt();
+		Integer DocID = payObject.get("DocID").getAsInt();
+	 
+		String output = payObj.insertPayment(DocCharge, HosCharge, AppoCharge, PayType, CardNo, CardExpiryDate, Card_CVNo, AID, DocID);
+	 
+		return output;
+	
+	}
 
 	@PUT
 	@Path("/")
@@ -87,23 +92,25 @@ public class PaymentFunction {
 	
 	}
 	
-	
 	@DELETE
 	@Path("/")
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deletePayment(String paymentData)
+	public String deletePayment(String paymentmData)
 	{
-		
-		//Convert the input string to an XML document
-		Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
-
-		//Read the value from the element <itemID>
-		String PayID = doc.select("PayID").text();
+		//Convert the input string to a JSON object
+		JsonObject payObject = new JsonParser().parse(paymentmData).getAsJsonObject();
+		//Read the values from the JSON object
+	 
+		Integer PayID = payObject.get("PayID").getAsInt();
+	 
 		String output = payObj.deletePayment(PayID);
 	 
 		return output;
 	
 	}
+	
+	
+	
 
 }
