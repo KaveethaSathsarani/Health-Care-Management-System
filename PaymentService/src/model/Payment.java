@@ -26,9 +26,22 @@ public class Payment {
 		 {
 			 return "Error while connecting to the database for inserting."; 
 		 }
+		 
+		//check if appointment charge,doctor charge and hospital charge are equal or less than zero
+		 if(DocCharge <= 0)
+		 {
+			 return "Doctors Charge cannot be equal or less than zero ";
+		 }
+		 else if(HosCharge <= 0 )
+		 {
+			 return "Hospital Charge cannot be equal or less than zero ";
+		 }
+		 else if(AppoCharge <= 0 )
+		 {
+			 return "Appointment Charge cannot be equal or less than zero ";
+		 }
 	 
-		 // create a prepared statement
-				 
+		 // create a prepared statement		 
 		 String query = " insert into payment(PayID,DocCharge,HosCharge,AppoCharge,Total,PayType,CardNo,CardExpiryDate,Card_CVNo,AID,DocID)"
 			 + " values (?,?,?,?,DocCharge+HosCharge+AppoCharge,?,?,?,?,?,?)";
 	  
@@ -62,8 +75,7 @@ public class Payment {
 	
 	
 	public String readPayment()
-    {
-	 
+    {	 
 	 String output = "";
 	 
 	 try
@@ -71,7 +83,9 @@ public class Payment {
 	
 		 Connection con = DBHandler.connect();
 		 if (con == null)
-		 {return "Error while connecting to the database for reading."; }
+		 {
+			 return "Error while connecting to the database for reading."; 
+		 }
 		 // Prepare the html table to be displayed
 	 
 		 output = "<table border=\"1\"><tr><th>PayID</th><th>DocCharge</th><th>HosCharge</th><th>AppoCharge</th><th>Total</th>"
@@ -133,10 +147,32 @@ public class Payment {
 	 
 	 try
 	 {
-		 
-		 Connection con = DBHandler.connect();
+		 		 Connection con = DBHandler.connect();
 		 if (con == null)
-		 {return "Error while connecting to the database for updating."; }
+		 {
+			 return "Error while connecting to the database for updating."; 
+		 }
+		 
+		//Check payID is null 
+		 if(PayID == null)
+		 {
+			 return "PayID cannot be null";
+		 }
+		 
+		 //check if appointment charge,doctor charge and hospital charge are equal or less than zero
+		 if(DocCharge <= 0)
+		 {
+			 return "Doctors Charge cannot be equal or less than zero ";
+		 }
+		 else if(HosCharge <= 0 )
+		 {
+			 return "Hospital Charge cannot be equal or less than zero ";
+		 }
+		 else if(AppoCharge <= 0 )
+		 {
+			 return "Appointment Charge cannot be equal or less than zero ";
+		 }
+		 
 		 // create a prepared statement
 		 String query = "UPDATE payment SET DocCharge=?,HosCharge=?,AppoCharge=?,PayType=?,CardNo=?,CardExpiryDate=?,Card_CVNo=?,AID=?,DocID=? WHERE PayID=?";
 		 PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -177,7 +213,15 @@ public class Payment {
 		 
 		 Connection con = DBHandler.connect();
 		 if (con == null)
-		 {return "Error while connecting to the database for deleting."; }
+		 {
+			 return "Error while connecting to the database for deleting."; 
+		 }
+		 
+		 //Check payID is null 
+		 if(payID == null)
+		 {
+			 return "PayID cannot be null";
+		 }
 		 // create a prepared statement
 		 String query = "delete from payment where PayID=?";
 		 PreparedStatement preparedStmt = con.prepareStatement(query);

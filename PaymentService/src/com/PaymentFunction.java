@@ -32,7 +32,9 @@ public class PaymentFunction {
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
 	public String readPayment() {
+		
 		return payObj.readPayment();
+		
 	}
 	
 	@POST
@@ -52,9 +54,9 @@ public class PaymentFunction {
 			 @FormParam("DocID") Integer DocID)
 			{
 		
-			String output = payObj.insertPayment(DocCharge, HosCharge, AppoCharge, Total, PayType, CardNo, CardExpiryDate, Card_CVNo, AID, DocID);
+				String output = payObj.insertPayment(DocCharge, HosCharge, AppoCharge, Total, PayType, CardNo, CardExpiryDate, Card_CVNo, AID, DocID);
 			
-			return output; 
+				return output; 
 			}
 
 	@PUT
@@ -63,25 +65,25 @@ public class PaymentFunction {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updatePayment(String paymentmData)
 	{
-	//Convert the input string to a JSON object
-	 JsonObject payObject = new JsonParser().parse(paymentmData).getAsJsonObject();
-	//Read the values from the JSON object
+		//Convert the input string to a JSON object
+		JsonObject payObject = new JsonParser().parse(paymentmData).getAsJsonObject();
+		//Read the values from the JSON object
 	 
-	 Integer PayID = payObject.get("PayID").getAsInt();
-	 Double DocCharge = payObject.get("DocCharge").getAsDouble();
-	 Double HosCharge = payObject.get("HosCharge").getAsDouble();
-	 Double AppoCharge = payObject.get("AppoCharge").getAsDouble();
-	 //Double Total = payObject.get("Total").getAsDouble();
-	 String PayType = payObject.get("PayType").getAsString();
-	 String CardNo = payObject.get("CardNo").getAsString();
-	 String CardExpiryDate = payObject.get("CardExpiryDate").getAsString();
-	 String Card_CVNo =payObject.get("Card_CVNo").getAsString();
-	 Integer AID = payObject.get("AID").getAsInt();
-	 Integer DocID = payObject.get("DocID").getAsInt();
+		Integer PayID = payObject.get("PayID").getAsInt();
+		Double DocCharge = payObject.get("DocCharge").getAsDouble();
+		Double HosCharge = payObject.get("HosCharge").getAsDouble();
+		Double AppoCharge = payObject.get("AppoCharge").getAsDouble();
+		//Double Total = payObject.get("Total").getAsDouble();
+		String PayType = payObject.get("PayType").getAsString();
+		String CardNo = payObject.get("CardNo").getAsString();
+		String CardExpiryDate = payObject.get("CardExpiryDate").getAsString();
+		String Card_CVNo =payObject.get("Card_CVNo").getAsString();
+		Integer AID = payObject.get("AID").getAsInt();
+		Integer DocID = payObject.get("DocID").getAsInt();
 	 
-	 String output = payObj.updatePayment(PayID,DocCharge, HosCharge, AppoCharge, PayType, CardNo, CardExpiryDate, Card_CVNo, AID, DocID);
+		String output = payObj.updatePayment(PayID,DocCharge, HosCharge, AppoCharge, PayType, CardNo, CardExpiryDate, Card_CVNo, AID, DocID);
 	 
-	 return output;
+		return output;
 	
 	}
 	
@@ -93,14 +95,14 @@ public class PaymentFunction {
 	public String deletePayment(String paymentData)
 	{
 		
-	//Convert the input string to an XML document
-	 Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
 
-	//Read the value from the element <itemID>
-	 String PayID = doc.select("PayID").text();
-	 String output = payObj.deletePayment(PayID);
+		//Read the value from the element <itemID>
+		String PayID = doc.select("PayID").text();
+		String output = payObj.deletePayment(PayID);
 	 
-	return output;
+		return output;
 	
 	}
 
