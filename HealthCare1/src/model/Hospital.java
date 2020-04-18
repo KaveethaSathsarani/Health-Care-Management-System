@@ -9,14 +9,15 @@ public class Hospital { // A common method to connect to the DB
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Provide the correct details: DBServer/DBName, username, password
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/HealthCare1?useTimezone=true&serverTimezone=UTC", "root", "");
+			con = DriverManager.getConnection(
+					"jdbc:mysql://127.0.0.1:3306/HealthCare1?useTimezone=true&serverTimezone=UTC", "root", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return con;
 	}
 
-	public String insertHospital(String HosName, String HosCity, String Rooms, String Address, String ContactNum) {
+	public String insertHospital(String HosName, String HosCity, int Rooms, String Address, int ContactNum) {
 		String output = "";
 		try {
 			Connection con = connect();

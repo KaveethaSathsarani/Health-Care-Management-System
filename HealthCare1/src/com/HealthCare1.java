@@ -17,6 +17,7 @@ public class HealthCare1 {
 
 	@GET
 	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_HTML)
 	public String readHospital() {
 		return HospitalObj.readHospital();
@@ -24,7 +25,7 @@ public class HealthCare1 {
 
 	@POST
 	@Path("/")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertHospital(@FormParam("HosName") String HosName, @FormParam("HosCity") String HosCity,
 			@FormParam("Rooms") String Rooms, @FormParam("Address") String Address,
@@ -53,7 +54,7 @@ public class HealthCare1 {
 
 	@DELETE
 	@Path("/")
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteHospital(String itemData) {
 //Convert the input string to an XML document
